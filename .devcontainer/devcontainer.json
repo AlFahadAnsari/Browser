@@ -1,0 +1,33 @@
+{
+  "name": "GeoBrowser (hosted)",
+
+  // Reuses the same image as any other deployment, so what runs here is exactly
+  // what runs on a server.
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "context": ".."
+  },
+
+  "remoteUser": "geo",
+
+  // Keep the container alive for the editor; serve.sh is started on attach instead
+  // of as the image's command.
+  "overrideCommand": true,
+
+  "forwardPorts": [7860],
+  "portsAttributes": {
+    "7860": {
+      "label": "GeoBrowser",
+      "onAutoForward": "notify"
+    }
+  },
+
+  // Starts the browser in the background so the port is live as soon as the
+  // Codespace opens. Logs go to /tmp/geobrowser.log.
+  "postAttachCommand": "nohup ./scripts/serve.sh > /tmp/geobrowser.log 2>&1 & echo 'GeoBrowser starting — open the forwarded port 7860'",
+
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "8gb"
+  }
+}

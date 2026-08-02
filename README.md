@@ -149,7 +149,8 @@ docker run -p 7860:7860 -e VNC_PASSWORD=choose-something geobrowser
 # then open http://localhost:7860
 ```
 
-For a free public URL with no credit card, see [deploy/HUGGINGFACE.md](deploy/HUGGINGFACE.md).
+Where to run it — including a free option that needs no credit card — is covered in
+[deploy/HOSTING.md](deploy/HOSTING.md).
 
 One trade-off to know: the coordinates stay Prabhadevi, but the _IP_ becomes the server's.
 Running the desktop app on your own machine keeps the two consistent; hosting it does not.
