@@ -1,0 +1,99 @@
+@import 'tailwindcss';
+
+/* Theme switching is driven by a `dark` class on <html>, set from the persisted setting. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --app-bg: #f5f6f8;
+  --app-surface: #ffffff;
+  --app-surface-2: #eef0f4;
+  --app-border: #dfe3e9;
+  --app-fg: #101319;
+  --app-muted: #626c7a;
+  --app-accent: #2563eb;
+  --app-accent-fg: #ffffff;
+  --app-danger: #dc2626;
+  color-scheme: light;
+}
+
+.dark {
+  --app-bg: #0b0e13;
+  --app-surface: #131820;
+  --app-surface-2: #1b212b;
+  --app-border: #262e3a;
+  --app-fg: #e6ebf3;
+  --app-muted: #8b95a5;
+  --app-accent: #5b8dff;
+  --app-accent-fg: #071021;
+  --app-danger: #f87171;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-app-bg: var(--app-bg);
+  --color-app-surface: var(--app-surface);
+  --color-app-surface-2: var(--app-surface-2);
+  --color-app-border: var(--app-border);
+  --color-app-fg: var(--app-fg);
+  --color-app-muted: var(--app-muted);
+  --color-app-accent: var(--app-accent);
+  --color-app-accent-fg: var(--app-accent-fg);
+  --color-app-danger: var(--app-danger);
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    overflow: hidden;
+    font-family: var(--font-sans);
+    background-color: var(--app-bg);
+    color: var(--app-fg);
+    /* The chrome is a fixed frame; only inner panes scroll. */
+    user-select: none;
+  }
+
+  input {
+    user-select: text;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--app-accent) 35%, transparent);
+  }
+
+  *:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--app-accent) 70%, transparent);
+    outline-offset: 1px;
+  }
+}
+
+@layer utilities {
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--app-border) transparent;
+  }
+
+  .scroll-thin::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-thumb {
+    background-color: var(--app-border);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    border-radius: 999px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
