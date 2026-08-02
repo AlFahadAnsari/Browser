@@ -116,15 +116,19 @@ native view exactly on top of it. The view is hidden on the Home, History and Se
 
 ## Download
 
-Installers for macOS, Windows and Linux are published on the
+Installers for **macOS** (Apple Silicon and Intel) and **Windows** are published on the
 [Releases page](https://github.com/AlFahadAnsari/Browser/releases/latest).
 
 They are unsigned, so the first launch needs one extra click: on macOS right-click the app
 and choose **Open**; on Windows choose **More info → Run anyway**.
 
+Linux is not published. The AppImage and `.deb` targets do not package cleanly on the CI
+runner, and an installer that does not work is worse than none — `npm run dist:linux` still
+works if you are building on a Linux machine yourself.
+
 ## Releasing
 
-`.github/workflows/release.yml` builds all three platforms and publishes the installers
+`.github/workflows/release.yml` builds macOS and Windows and publishes the installers
 whenever a version tag is pushed:
 
 ```bash
