@@ -126,6 +126,24 @@ Linux is not published. The AppImage and `.deb` targets do not package cleanly o
 runner, and an installer that does not work is worse than none — `npm run dist:linux` still
 works if you are building on a Linux machine yourself.
 
+## Hosting it (use it without installing anything)
+
+The app can also run on a server and stream its screen to any web browser, so you can use
+it from a phone or a machine that isn't yours. `Dockerfile` + `scripts/serve.sh` build that
+image: Xvfb provides a virtual screen, the real Electron app draws onto it, and noVNC serves
+that screen over HTTP on port 7860.
+
+```bash
+docker build -t geobrowser .
+docker run -p 7860:7860 -e VNC_PASSWORD=choose-something geobrowser
+# then open http://localhost:7860
+```
+
+For a free public URL with no credit card, see [deploy/HUGGINGFACE.md](deploy/HUGGINGFACE.md).
+
+One trade-off to know: the coordinates stay Prabhadevi, but the _IP_ becomes the server's.
+Running the desktop app on your own machine keeps the two consistent; hosting it does not.
+
 ## Releasing
 
 `.github/workflows/release.yml` builds macOS and Windows and publishes the installers
