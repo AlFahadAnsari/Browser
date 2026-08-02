@@ -45,8 +45,10 @@ RUN chown root:root node_modules/electron/dist/chrome-sandbox \
     && chmod 4755 node_modules/electron/dist/chrome-sandbox \
     && chmod +x scripts/serve.sh
 
-RUN useradd -m -u 1000 geo && chown -R geo:geo /app /home/geo
-USER geo
+# The official Node images already ship an unprivileged `node` user at UID 1000, so
+# creating another user at that UID fails the build. Reuse the one that exists.
+RUN chown -R node:node /app
+USER node
 
 ENV DISPLAY=:0 \
     SCREEN_SIZE=1280x820x24 \

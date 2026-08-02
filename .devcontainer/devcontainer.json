@@ -1,17 +1,13 @@
 {
   "name": "GeoBrowser (hosted)",
 
-  // Reuses the same image as any other deployment, so what runs here is exactly
-  // what runs on a server.
+  // A system-libraries-only image. Codespaces mounts the repo over /workspaces, so
+  // the app is built there by postCreateCommand rather than baked into the image.
   "build": {
-    "dockerfile": "../Dockerfile",
-    "context": ".."
+    "dockerfile": "Dockerfile"
   },
 
-  "remoteUser": "geo",
-
-  // Keep the container alive for the editor; serve.sh is started on attach instead
-  // of as the image's command.
+  "remoteUser": "node",
   "overrideCommand": true,
 
   "forwardPorts": [7860],
@@ -22,8 +18,12 @@
     }
   },
 
-  // Starts the browser in the background so the port is live as soon as the
-  // Codespace opens. Logs go to /tmp/geobrowser.log.
+  // Build the app, then give Chromium's sandbox helper the setuid bit it needs.
+  // If that is not permitted, scripts/serve.sh falls back to --no-sandbox.
+  "postCreateCommand": "npm ci && npm run build && (sudo chown root:root node_modules/electron/dist/chrome-sandbox && sudo chmod 4755 node_modules/electron/dist/chrome-sandbox) || true",
+
+  // Start the browser in the background so port 7860 is live on attach.
+  // Logs go to /tmp/geobrowser.log.
   "postAttachCommand": "nohup ./scripts/serve.sh > /tmp/geobrowser.log 2>&1 & echo 'GeoBrowser starting — open the forwarded port 7860'",
 
   "hostRequirements": {
