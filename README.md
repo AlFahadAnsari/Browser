@@ -1,13 +1,3 @@
----
-title: GeoBrowser
-emoji: 📍
-colorFrom: blue
-colorTo: indigo
-sdk: docker
-app_port: 7860
-pinned: false
----
-
 # GeoBrowser
 
 A lightweight Electron desktop application that opens websites in Chromium and always
