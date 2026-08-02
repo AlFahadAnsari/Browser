@@ -114,6 +114,38 @@ native view exactly on top of it. The view is hidden on the Home, History and Se
 - Every permission except geolocation is denied; device permissions are denied outright.
 - The UI is served under a Content-Security-Policy and is not allowed to navigate away.
 
+## Download
+
+Installers for macOS, Windows and Linux are published on the
+[Releases page](https://github.com/AlFahadAnsari/Browser/releases/latest).
+
+They are unsigned, so the first launch needs one extra click: on macOS right-click the app
+and choose **Open**; on Windows choose **More info → Run anyway**.
+
+## Releasing
+
+`.github/workflows/release.yml` builds all three platforms and publishes the installers
+whenever a version tag is pushed:
+
+```bash
+npm version patch          # or minor / major
+git push --follow-tags
+```
+
+Running the workflow manually (`workflow_dispatch`) builds every platform as a check
+without creating a release.
+
+`docs/index.html` is the download page. It is a single self-contained file and can be served
+by GitHub Pages (Settings → Pages → Source: `main` / `docs`) or by Vercel — `vercel.json`
+points Vercel at `docs/` and skips the build, since there is nothing here for a web host to
+run.
+
+> **This app cannot be deployed as a website.** The UI talks to the Electron main process
+> through a preload bridge, the website area is a native `WebContentsView`, and the
+> geolocation override lives in the main process. In a browser tab none of that exists — a
+> page is not allowed to frame `google.com`, let alone change the location it reports. Only
+> the download page above is web-hostable.
+
 ## Getting started
 
 ```bash

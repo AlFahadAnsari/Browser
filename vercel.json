@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "echo 'Landing page only — no dependencies needed.'",
+  "buildCommand": "echo 'GeoBrowser is a desktop app. Vercel serves only the download page in docs/.'",
+  "outputDirectory": "docs",
+  "cleanUrls": true
+}
